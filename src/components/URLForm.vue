@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="handleSubmit">
     <div
-      class="flex rounded hover:shadow-xl duration-100 transition-shadow shadow-lg focus-within:ring-2"
+      class="flex rounded hover:shadow-xl duration-100 transition-shadow bg-slate-700 shadow-lg focus-within:ring-2"
     >
       <URLFormProtocol v-model="protocol" class="w-20 md:w-32"></URLFormProtocol>
       <input

@@ -1,16 +1,14 @@
-# Vue 3 + TypeScript + Vite
+# "LinkPreview" frontend
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This is frontend repository for the "LinkPreview" tool I created that takes a URL as input from user and displays a "preview" for that link by doing some runtime web-scraping.
 
-## Recommended IDE Setup
+[It's deployed here.](http://194.195.117.9/)
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
 
-## Type Support For `.vue` Imports in TS
+## Stack used
+- Vue with typescript (+ tailwindcss) for frontend (this repo)
+- Go executable as backend ([its repo](https://github.com/SHD-420/linkpreview-backend))
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+## Deployment strategy
+This repo contains a shell script "deploy.sh" which builds the Vue application and pushes the output files into a branch by name "deploy". I pull from that branch on the server machine and serve the bundle from there.
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
-
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).

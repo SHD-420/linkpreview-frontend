@@ -60,7 +60,7 @@ const getPreview = (url: string) => {
     hasError.value = false;
     currentURL.value = url;
     isLoading.value = true;
-    fetch("http://localhost:8000/api/get-preview", {
+    fetch("/api/get-preview", {
       method: "post",
       body: JSON.stringify({ link: url }),
     })

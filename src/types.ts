@@ -4,3 +4,8 @@ export type LinkPreview = {
   favicons: string[];
   status: number;
 }
+
+export type PreviewHistoryItem = {
+  title: string;
+  url: string;
+}

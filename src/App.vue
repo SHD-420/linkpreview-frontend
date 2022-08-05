@@ -2,6 +2,10 @@
   <div class="min-h-screen bg-slate-800">
     <div class="py-8 px-2 md:w-8/12 mx-auto">
       <AppHead></AppHead>
+      <PreviouslyPreviewed
+        :current-item="currentHistoryItem"
+        @preview-requested="getPreview"
+      ></PreviouslyPreviewed>
       <URLForm @submit="getPreview" :is-loading="isLoading"></URLForm>
       <div class="mt-16">
         <transition name="slide-y" mode="out-in">
@@ -34,14 +38,20 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import type { LinkPreview } from "./types";
+import { LinkPreview, PreviewHistoryItem } from "./types";
 import AppHead from "./components/AppHead.vue";
 import URLForm from "./components/URLForm.vue";
 import PreviewCard from "./components/PreviewCard.vue";
+import PreviouslyPreviewed from "./components/PreviouslyPreviewed.vue";
 
 const isLoading = ref(false);
 const currentURL = ref<string>();
 const currentPreview = ref<LinkPreview>();
+
+// currentHistoryItem is passed to PreviouslyPreviewed component
+// to manage storing results to localStorage for later reference
+const currentHistoryItem = ref<PreviewHistoryItem | null>(null);
+
 const hasError = ref(false);
 
 const getPreview = (url: string) => {
@@ -50,7 +60,7 @@ const getPreview = (url: string) => {
     hasError.value = false;
     currentURL.value = url;
     isLoading.value = true;
-    fetch("/api/get-preview", {
+    fetch("http://localhost:8000/api/get-preview", {
       method: "post",
       body: JSON.stringify({ link: url }),
     })
@@ -58,8 +68,9 @@ const getPreview = (url: string) => {
         if (res.status === 200) return res.json();
         else hasError.value = true;
       })
-      .then((data) => {
-        currentPreview.value = data as LinkPreview;
+      .then((data: LinkPreview) => {
+        currentPreview.value = data;
+        currentHistoryItem.value = { title: data.title, url };
       })
       .finally(() => (isLoading.value = false));
   }
